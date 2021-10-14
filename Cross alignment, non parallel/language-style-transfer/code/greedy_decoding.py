@@ -1,5 +1,5 @@
 import numpy as np
-from .utils import strip_eos
+from utils import strip_eos
 
 
 class Decoder(object):

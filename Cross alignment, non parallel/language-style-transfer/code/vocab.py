@@ -1,6 +1,9 @@
+# -*- coding: future_fstrings -*-
+
 import numpy as np
 from numpy import linalg as LA
-import _pickle as pickle
+import pickle as pickle
+import random
 from collections import Counter
 
 
@@ -13,7 +16,7 @@ class Vocabulary(object):
             (self.size, self.dim_emb)) - 0.5
 
         if emb_file:
-            print('Loading word vectors from', emb_file)
+            print(f'Loading word vectors from {emb_file}')
             with open(emb_file) as f:
                 for line in f:
                     parts = line.split()
@@ -26,7 +29,7 @@ class Vocabulary(object):
             self.embedding[i] /= LA.norm(self.embedding[i])
 
 
-def build_vocab(data, path, min_occur=2):
+def build_vocab(data, path, min_occur=5):
     word2id = {'<pad>': 0, '<go>': 1, '<eos>': 2, '<unk>': 3}
     id2word = ['<pad>', '<go>', '<eos>', '<unk>']
 

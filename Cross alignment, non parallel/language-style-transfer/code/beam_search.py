@@ -1,7 +1,7 @@
-from .nn import *
-from .utils import strip_eos
-from copy import deepcopy
 import tensorflow as tf
+from nn import *
+from utils import strip_eos
+from copy import deepcopy
 
 
 class BeamState(object):
@@ -23,16 +23,16 @@ class Decoder(object):
 
         cell = create_cell(dim_h, n_layers, dropout=1)
 
-        self.inp = tf.compat.v1.placeholder(tf.int32, [None])
-        self.h = tf.compat.v1.placeholder(tf.float32, [None, dim_h])
+        self.inp = tf.placeholder(tf.int32, [None])
+        self.h = tf.placeholder(tf.float32, [None, dim_h])
 
-        tf.compat.v1.get_variable_scope().reuse_variables()
-        embedding = tf.compat.v1.get_variable('embedding', [vocab.size, dim_emb])
-        with tf.compat.v1.variable_scope('projection'):
-            proj_W = tf.compat.v1.get_variable('W', [dim_h, vocab.size])
-            proj_b = tf.compat.v1.get_variable('b', [vocab.size])
+        tf.get_variable_scope().reuse_variables()
+        embedding = tf.get_variable('embedding', [vocab.size, dim_emb])
+        with tf.variable_scope('projection'):
+            proj_W = tf.get_variable('W', [dim_h, vocab.size])
+            proj_b = tf.get_variable('b', [vocab.size])
 
-        with tf.compat.v1.variable_scope('generator'):
+        with tf.variable_scope('generator'):
             inp = tf.nn.embedding_lookup(embedding, self.inp)
             outputs, self.h_prime = cell(inp, self.h)
             logits = tf.matmul(outputs, proj_W) + proj_b

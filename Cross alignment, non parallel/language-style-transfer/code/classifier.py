@@ -1,11 +1,15 @@
+# -*- coding: future_fstrings -*-
+
 import os
+import sys
 import time
 import random
+import numpy as np
 import tensorflow as tf
-from .options import load_arguments
-from .vocab import Vocabulary, build_vocab
-from .file_io import load_sent
-from .nn import cnn
+from options import load_arguments
+from vocab import Vocabulary, build_vocab
+from file_io import load_sent
+from nn import cnn
 
 
 class Model(object):
@@ -15,16 +19,16 @@ class Model(object):
         filter_sizes = [int(x) for x in args.filter_sizes.split(',')]
         n_filters = args.n_filters
 
-        self.dropout = tf.compat.v1.placeholder(tf.float32,
-                                                name='dropout')
-        self.learning_rate = tf.compat.v1.placeholder(tf.float32,
-                                                      name='learning_rate')
-        self.x = tf.compat.v1.placeholder(tf.int32, [None, None],  # batch_size * max_len
-                                          name='x')
-        self.y = tf.compat.v1.placeholder(tf.float32, [None],
-                                          name='y')
+        self.dropout = tf.placeholder(tf.float32,
+                                      name='dropout')
+        self.learning_rate = tf.placeholder(tf.float32,
+                                            name='learning_rate')
+        self.x = tf.placeholder(tf.int32, [None, None],  # batch_size * max_len
+                                name='x')
+        self.y = tf.placeholder(tf.float32, [None],
+                                name='y')
 
-        embedding = tf.compat.v1.get_variable('embedding', [vocab.size, dim_emb])
+        embedding = tf.get_variable('embedding', [vocab.size, dim_emb])
         x = tf.nn.embedding_lookup(embedding, self.x)
         self.logits = cnn(x, filter_sizes, n_filters, self.dropout, 'cnn')
         self.probs = tf.sigmoid(self.logits)
@@ -32,20 +36,20 @@ class Model(object):
         loss = tf.nn.sigmoid_cross_entropy_with_logits(
             labels=self.y, logits=self.logits)
         self.loss = tf.reduce_mean(loss)
-        self.optimizer = tf.compat.v1.train.AdamOptimizer(self.learning_rate) \
+        self.optimizer = tf.train.AdamOptimizer(self.learning_rate) \
             .minimize(self.loss)
 
-        self.saver = tf.compat.v1.train.Saver()
+        self.saver = tf.train.Saver()
 
 
 def create_model(sess, args, vocab):
     model = Model(args, vocab)
     if args.load_model:
-        print(f'Loading model from {args.model}.')
+        print(f'Loading model from {args.model}')
         model.saver.restore(sess, args.model)
     else:
         print(f'Creating model with fresh parameters.')
-        sess.run(tf.compat.v1.global_variables_initializer())
+        sess.run(tf.global_variables_initializer())
     return model
 
 
@@ -92,7 +96,7 @@ def prepare(path, suffix=''):
     x = data0 + data1
     y = [0] * len(data0) + [1] * len(data1)
     z = sorted(zip(x, y), key=lambda i: len(i[0]))
-    return zip(*z)
+    return list(zip(*z))
 
 
 if __name__ == '__main__':
@@ -113,9 +117,9 @@ if __name__ == '__main__':
     if args.test:
         test_x, test_y = prepare(args.test)
 
-    config = tf.compat.v1.ConfigProto()
+    config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
-    with tf.compat.v1.Session(config=config) as sess:
+    with tf.Session(config=config) as sess:
         model = create_model(sess, args, vocab)
         if args.train:
             batches = get_batches(train_x, train_y,
@@ -142,12 +146,12 @@ if __name__ == '__main__':
                     loss += step_loss / args.steps_per_checkpoint
 
                     if step % args.steps_per_checkpoint == 0:
-                        print(f'step {step}, time {(time.time() - start_time):.0fs}, loss {loss:.2f}')
+                        print(f'step {step}, time {(time.time() - start_time):0fs}, loss {loss:.2f}')
                         loss = 0.0
 
                 if args.dev:
                     acc, _ = evaluate(sess, args, vocab, model, dev_x, dev_y)
-                    print('dev accuracy {acc:.2f}')
+                    print(f'dev accuracy {acc:.2f}')
                     if acc > best_dev:
                         best_dev = acc
                         print('Saving model...')
@@ -155,4 +159,4 @@ if __name__ == '__main__':
 
         if args.test:
             acc, _ = evaluate(sess, args, vocab, model, test_x, test_y)
-            print('test accuracy {acc:.2f}')
+            print(f'test accuracy {acc:.2f}')

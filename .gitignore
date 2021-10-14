@@ -104,3 +104,7 @@ ENV/
 # mypy
 .mypy_cache/
 !/Cross alignment, non parallel/DataProcessing/Authors/
+!/Cross alignment, non parallel/language-style-transfer/Models/
+/Cross alignment, non parallel/language-style-transfer/Models/
+/Cross alignment, non parallel/DataProcessing/Authors/
+download_model.sh

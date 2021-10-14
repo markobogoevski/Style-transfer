@@ -1,3 +1,4 @@
+# -*- coding: future_fstrings -*-
 
 class Losses(object):
     def __init__(self, div):
@@ -15,4 +16,4 @@ class Losses(object):
         self.d1 += d1 / self.div
 
     def output(self, s):
-        print('{s} loss {self.loss:.2f}, g {self.g:%.2f}, d {self.d:%.2f}, adv {self.d0:%.2f}, {self.d1:%.2f}')
+        print(f'{s} loss {self.loss:.2f}, g {self.g:%.2f}, d {self.d:%.2f}, adv {self.d0:%.2f}, {self.d1:%.2f}')

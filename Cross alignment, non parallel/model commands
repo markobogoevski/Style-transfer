@@ -1,0 +1,47 @@
+Raboti so tf 1.4 ali na cpu, mn vreme trae 1 epoha
+p
+
+1. YELP Sentiment
+
+Train:
+
+Cd to language-style-transfer
+python style_transfer.py --train ../data/yelp/sentiment.train --dev ../data/yelp/sentiment.dev --output ../Models/modelYelp/sentiment.dev --vocab ../Models/modelYelp/yelp.vocab --model ../Models/modelYelp/model
+
+Test:
+python style_transfer.py --test ../data/yelp/sentiment.test --output ../Models/yelp/sentiment.test --vocab ../Models/modelYelp/yelp.vocab --model ../Models/modelYelp/model --load_model true --beam 8
+
+
+2. Lovecraft <-> Shakespeare
+
+Train:
+
+Cd to language-style-transfer
+python style_transfer.py --train ../data/LovecraftShakespeare/LovecraftShakespeare.train --dev ../data/LovecraftShakespeare/LovecraftShakespeare.dev --output ../Models/LovecraftShakespeare/LovecraftShakespeare.dev --vocab ../Models/LovecraftShakespeare/LovecraftShakespeare.vocab --model ../Models/LovecraftShakespeare/model
+
+Test:
+python style_transfer.py --test ../data/LovecraftShakespeare/LovecraftShakespeare.test --output ../Models/LovecraftShakespeare/LovecraftShakespeare.test --vocab ../Models/LovecraftShakespeare/LovecraftShakespeare.vocab --model ../Models/LovecraftShakespeare/model --load_model true --beam 8
+
+
+3. Lovecraft <-> Tolstoy
+
+Train yelp:
+
+Cd to language-style-transfer
+python style_transfer.py --train ../data/LovecraftTolstoy/LovecraftTolstoy.train --dev ../data/LovecraftTolstoy/LovecraftTolstoy.dev --output ../Models/LovecraftTolstoy/LovecraftTolstoy.dev --vocab ../Models/LovecraftTolstoy/LovecraftTolstoy.vocab --model ../Models/LovecraftTolstoy/model
+
+Test yelp:
+python style_transfer.py --test ../data/LovecraftTolstoy/LovecraftTolstoy.test --output ../Models/LovecraftTolstoy/LovecraftTolstoy.test --vocab ../Models/LovecraftTolstoy/LovecraftTolstoy.vocab --model ../Models/LovecraftTolstoy/model --load_model true --beam 8
+
+
+4. Shakespeare <-> Tolstoy
+
+Train yelp:
+
+Cd to language-style-transfer
+python style_transfer.py --train ../data/ShakespeareTolstoy/ShakespeareTolstoy.train --dev ../data/ShakespeareTolstoy/ShakespeareTolstoy.dev --output ../Models/ShakespeareTolstoy/ShakespeareTolstoy.dev --vocab ../Models/ShakespeareTolstoy/ShakespeareTolstoy.vocab --model ../Models/ShakespeareTolstoy/model
+
+Test yelp:
+python style_transfer.py --test ../data/ShakespeareTolstoy/ShakespeareTolstoy.test --output ../Models/ShakespeareTolstoy/ShakespeareTolstoy.test --vocab ../Models/ShakespeareTolstoy/ShakespeareTolstoy.vocab --model ../Models/ShakespeareTolstoy/model --load_model true --beam 8
+
+

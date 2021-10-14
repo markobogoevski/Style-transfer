@@ -7,7 +7,7 @@ def main():
     input_text_path = "../Authors/Raw/Shakespeare/shakespeare.txt"
 
     # Clean the merged text
-    cleaned_lines = clean_text(input_text_path, capital=False)
+    cleaned_lines = clean_text(input_text_path, capital=False)[:6000]
 
     # Split the cleaned into train dev and test sets
     # Train = 0.7, dev = 0.1, test = 0.2
