@@ -28,8 +28,8 @@ def clean_text(text_source, path=True, capital=True):
             tokens = [word for word in tokens if not word.isupper() or len(word) == 1]
         # convert to lower case
         tokens = [word.lower() for word in tokens]
-        cleaned_lines.append(" ".join(tokens))
-        cleaned_lines.append('\n')
+        line = " ".join(tokens)+"\n"
+        cleaned_lines.append(line)
     return cleaned_lines
 
 

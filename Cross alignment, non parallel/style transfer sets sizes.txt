@@ -1,0 +1,9 @@
+shakespeare 54283 full, 37998 train, 5428 dev, 10857 test
+lovecraft 18785 full, 13149 train, 1878 dev, 3758 test
+tolstoy 103884 full, 72718 train, 10389 dev, 20777 test
+
+Final:
+Full 14286 sentences
+Train 10000 sentences
+Dev 1428 sentences
+Test 2858 sentences

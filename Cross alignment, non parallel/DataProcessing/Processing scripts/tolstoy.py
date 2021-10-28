@@ -10,9 +10,9 @@ def main():
     merge_path = '../Authors/Raw/Tolstoy/tolstoy.txt'
     if not os.path.exists(merge_path):
         merged_txt = merge_files(input_folder_path, 'tolstoy.txt')
-        cleaned_lines = clean_text(merged_txt, path=False, capital=False)[:6000]
+        cleaned_lines = clean_text(merged_txt, path=False, capital=False)[:14286]
     else:
-        cleaned_lines = clean_text(merge_path)[:6000]
+        cleaned_lines = clean_text(merge_path)[:14286]
 
     # Split the cleaned into train dev and test sets
     # Train = 0.7, dev = 0.1, test = 0.2

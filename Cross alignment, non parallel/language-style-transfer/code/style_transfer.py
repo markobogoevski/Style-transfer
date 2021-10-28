@@ -65,6 +65,7 @@ class Model(object):
         enc_inputs = tf.nn.embedding_lookup(embedding, self.enc_inputs)
         dec_inputs = tf.nn.embedding_lookup(embedding, self.dec_inputs)
 
+
         init_state = tf.concat([linear(labels, dim_y, scope='encoder'),
                                 tf.zeros([self.batch_size, dim_z])], 1)
         cell_e = create_cell(dim_h, n_layers, self.dropout)
@@ -152,18 +153,20 @@ def transfer(model, decoder, sess, args, vocab, data0, data1, out_path):
 
     data0_tsf, data1_tsf = [], []
     losses = Accumulator(len(batches), ['loss', 'rec', 'adv', 'd0', 'd1'])
+    batch_no = 0
     for batch in batches:
         rec, tsf = decoder.rewrite(batch)
         half = int(batch['size'] / 2)
         data0_tsf += tsf[:half]
         data1_tsf += tsf[half:]
-
         loss, loss_rec, loss_adv, loss_d0, loss_d1 = sess.run([model.loss,
                                                                model.loss_rec, model.loss_adv, model.loss_d0,
                                                                model.loss_d1],
                                                               feed_dict=feed_dictionary(model, batch, args.rho,
                                                                                         args.gamma_min))
         losses.add([loss, loss_rec, loss_adv, loss_d0, loss_d1])
+        print(f'Finished batch {batch_no + 1}/{len(batches)}')
+        batch_no += 1
 
     n0, n1 = len(data0), len(data1)
     data0_tsf = reorder(order0, data0_tsf)[:n0]
@@ -181,6 +184,7 @@ def create_model(sess, args, vocab):
     if args.load_model:
         print(f'Loading model from {args.model}')
         model.saver.restore(sess, args.model)
+        print(f'Model loaded')
     else:
         print('Creating model with fresh parameters.')
         sess.run(tf.global_variables_initializer())
@@ -235,7 +239,7 @@ if __name__ == '__main__':
             gamma = args.gamma_init
             dropout = args.dropout_keep_prob
 
-            for epoch in range(1, 2):
+            for epoch in range(1, 1 + args.max_epochs):
                 print(f'--------------------epoch {epoch}--------------------')
                 print(f'learning_rate: {learning_rate}, gamma: {gamma}')
                 counter = 1

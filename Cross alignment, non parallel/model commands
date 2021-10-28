@@ -6,10 +6,10 @@ p
 Train:
 
 Cd to language-style-transfer
-python style_transfer.py --train ../data/yelp/sentiment.train --dev ../data/yelp/sentiment.dev --output ../Models/modelYelp/sentiment.dev --vocab ../Models/modelYelp/yelp.vocab --model ../Models/modelYelp/model
+python style_transfer.py --train ../data/yelp/sentiment.train --dev ../data/yelp/sentiment.dev --output ../Models/yelp/sentiment.dev --vocab ../Models/yelp/yelp.vocab --model ../Models/yelp/model
 
 Test:
-python style_transfer.py --test ../data/yelp/sentiment.test --output ../Models/yelp/sentiment.test --vocab ../Models/modelYelp/yelp.vocab --model ../Models/modelYelp/model --load_model true --beam 8
+python style_transfer.py --test ../data/yelp/sentiment.test --output ../Models/yelp/sentiment.test --vocab ../Models/yelp/yelp.vocab --model ../Models/yelp/model --load_model true --beam 8
 
 
 2. Lovecraft <-> Shakespeare
@@ -19,29 +19,33 @@ Train:
 Cd to language-style-transfer
 python style_transfer.py --train ../data/LovecraftShakespeare/LovecraftShakespeare.train --dev ../data/LovecraftShakespeare/LovecraftShakespeare.dev --output ../Models/LovecraftShakespeare/LovecraftShakespeare.dev --vocab ../Models/LovecraftShakespeare/LovecraftShakespeare.vocab --model ../Models/LovecraftShakespeare/model
 
+4 layers:
+python style_transfer.py --train ../data/LovecraftShakespeare/LovecraftShakespeare.train --dev ../data/LovecraftShakespeare/LovecraftShakespeare.dev --output ../Models/LovecraftShakespeare4/LovecraftShakespeare.dev --vocab ../Models/LovecraftShakespeare4/LovecraftShakespeare.vocab --model ../Models/LovecraftShakespeare4/model --n_layers 4
+
+
 Test:
 python style_transfer.py --test ../data/LovecraftShakespeare/LovecraftShakespeare.test --output ../Models/LovecraftShakespeare/LovecraftShakespeare.test --vocab ../Models/LovecraftShakespeare/LovecraftShakespeare.vocab --model ../Models/LovecraftShakespeare/model --load_model true --beam 8
 
 
 3. Lovecraft <-> Tolstoy
 
-Train yelp:
+Train:
 
 Cd to language-style-transfer
 python style_transfer.py --train ../data/LovecraftTolstoy/LovecraftTolstoy.train --dev ../data/LovecraftTolstoy/LovecraftTolstoy.dev --output ../Models/LovecraftTolstoy/LovecraftTolstoy.dev --vocab ../Models/LovecraftTolstoy/LovecraftTolstoy.vocab --model ../Models/LovecraftTolstoy/model
 
-Test yelp:
+Test:
 python style_transfer.py --test ../data/LovecraftTolstoy/LovecraftTolstoy.test --output ../Models/LovecraftTolstoy/LovecraftTolstoy.test --vocab ../Models/LovecraftTolstoy/LovecraftTolstoy.vocab --model ../Models/LovecraftTolstoy/model --load_model true --beam 8
 
 
 4. Shakespeare <-> Tolstoy
 
-Train yelp:
+Train:
 
 Cd to language-style-transfer
 python style_transfer.py --train ../data/ShakespeareTolstoy/ShakespeareTolstoy.train --dev ../data/ShakespeareTolstoy/ShakespeareTolstoy.dev --output ../Models/ShakespeareTolstoy/ShakespeareTolstoy.dev --vocab ../Models/ShakespeareTolstoy/ShakespeareTolstoy.vocab --model ../Models/ShakespeareTolstoy/model
 
-Test yelp:
+Test:
 python style_transfer.py --test ../data/ShakespeareTolstoy/ShakespeareTolstoy.test --output ../Models/ShakespeareTolstoy/ShakespeareTolstoy.test --vocab ../Models/ShakespeareTolstoy/ShakespeareTolstoy.vocab --model ../Models/ShakespeareTolstoy/model --load_model true --beam 8
 
 
